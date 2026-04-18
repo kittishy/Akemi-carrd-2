@@ -37,9 +37,9 @@ function Index() {
         type="button"
         onClick={() => setDark((d) => !d)}
         aria-label="Toggle theme"
-        className="fixed bottom-6 right-6 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-card text-foreground shadow-[0_8px_24px_-6px_rgba(15,23,42,0.25)] ring-1 ring-border transition-colors hover:bg-secondary"
+        className="fixed left-4 top-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full bg-card text-foreground shadow-sm ring-1 ring-border transition-colors hover:bg-secondary"
       >
-        {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
 
       <article className="w-full max-w-[320px] rounded-[28px] bg-card p-3 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.18)]">
