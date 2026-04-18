@@ -82,7 +82,7 @@ function Index() {
             </button>
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1 rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+              className="inline-flex items-center justify-center gap-1 rounded-full bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
             >
               Follow
               <Plus className="h-4 w-4" strokeWidth={2.2} />
