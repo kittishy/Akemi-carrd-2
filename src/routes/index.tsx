@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { User, Image as ImageIcon, Plus, Check, Sun, Moon } from "lucide-react";
+import { Plus, Check, Sun, Moon } from "lucide-react";
 import profileImg from "@/assets/profile-sophie.jpg";
 
 export const Route = createFileRoute("/")({
