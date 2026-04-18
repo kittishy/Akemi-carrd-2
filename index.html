@@ -55,7 +55,35 @@
           on simplicity and usability.
         </p>
 
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/068AyhyvE67qMRsMXLqAnd?utm_source=generator" width="100%" height="152" frameBorder="0" scrolling="no" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <!-- Dynamic Music (Spotify/Last.fm) -->
+        <div id="container06">
+          <div id="music-dynamic" aria-live="polite" aria-label="Music status">
+            <article id="now-playing-card" aria-label="Now playing on Spotify via Last.fm">
+              <img id="now-playing-art" class="now-playing-art" src="./assets/Haimiya-senpai wa Kowakute Kawaii.jpg" alt="Current track artwork" />
+              <div>
+                <p class="now-playing-label"><span class="now-playing-pulse" aria-hidden="true"></span>Listening</p>
+                <p id="now-playing-track" class="now-playing-track">Loading track...</p>
+                <p id="now-playing-artist" class="now-playing-artist">Checking Last.fm</p>
+                <a id="now-playing-link" class="now-playing-link" href="https://www.last.fm" target="_blank" rel="noopener noreferrer">Open on Last.fm</a>
+              </div>
+            </article>
+
+            <iframe
+              id="spotify-player"
+              data-testid="embed-iframe"
+              style="border-radius:12px; border:none;"
+              data-src="https://open.spotify.com/embed/track/068AyhyvE67qMRsMXLqAnd?utm_source=generator"
+              src="about:blank"
+              width="100%"
+              height="152"
+              frameBorder="0"
+              scrolling="no"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
 
 
         <div class="profile-card__actions">
@@ -71,6 +99,13 @@
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
             </svg>
           </button>
+        </div>
+
+        <!-- Discord Activities (Lanyard) -->
+        <div class="activity-section">
+          <div id="lanyard-activities" aria-live="polite" aria-label="Discord activities">
+            <!-- Activity cards are dynamically injected here -->
+          </div>
         </div>
       </div>
     </article>

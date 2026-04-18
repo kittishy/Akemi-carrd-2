@@ -49,7 +49,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 body {
@@ -305,5 +305,311 @@ html.dark .action-button--secondary:hover {
 @media (prefers-reduced-motion: reduce) {
   .profile-card {
     animation: none;
+  }
+}
+
+/* ==========================================================================
+   LANYARD DISCORD ACTIVITIES
+   ========================================================================== */
+
+.activity-section {
+  margin-top: 14px;
+}
+
+#lanyard-activities {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#lanyard-activities:empty {
+  display: none;
+}
+
+.activity-card {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-inner) - 4px);
+  background: var(--secondary);
+  padding: 12px;
+  text-align: left;
+  animation: activity-fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+@keyframes activity-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.activity-art-wrapper {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.activity-art {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: var(--border);
+  border: 1px solid var(--border);
+  padding: 4px;
+}
+
+.activity-art-small {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: contain;
+  border: 2px solid var(--card);
+  background: var(--secondary);
+  padding: 1px;
+}
+
+.activity-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activity-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--verified);
+  box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4);
+  animation: activity-pulse-ring 1.8s ease infinite;
+  flex: 0 0 auto;
+}
+
+@keyframes activity-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(52, 199, 89, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+  }
+}
+
+.activity-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.activity-details {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-bottom: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.activity-state {
+  font-size: 11.5px;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.activity-elapsed {
+  font-size: 10.5px;
+  color: var(--muted-foreground);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .activity-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .activity-art-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .activity-art {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .activity-art-small {
+    width: 18px;
+    height: 18px;
+  }
+
+  .activity-name {
+    font-size: 13px;
+  }
+}
+
+/* ==========================================================================
+   NOW PLAYING (MUSIC)
+   ========================================================================== */
+
+#music-dynamic {
+  width: 100%;
+  margin-top: 12px;
+}
+
+#now-playing-card {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-inner) - 4px);
+  background: var(--secondary);
+  padding: 12px;
+  text-align: left;
+  animation: activity-fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#container06.is-now-playing #spotify-player {
+  display: none;
+}
+
+#container06:not(.is-now-playing) #now-playing-card {
+  display: none;
+}
+
+.now-playing-art {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.now-playing-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.now-playing-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1db954; /* Spotify Green */
+  box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.4);
+  animation: now-playing-pulse-ring 1.8s ease infinite;
+  flex: 0 0 auto;
+}
+
+@keyframes now-playing-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(29, 185, 84, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 185, 84, 0);
+  }
+}
+
+.now-playing-track {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.now-playing-artist {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-bottom: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.now-playing-link {
+  font-size: 10.5px;
+  color: var(--muted-foreground);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  display: block;
+}
+
+.now-playing-link:hover {
+  opacity: 1;
+  color: var(--foreground);
+}
+
+@media (max-width: 480px) {
+  #now-playing-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .now-playing-art {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .now-playing-track {
+    font-size: 13px;
   }
 }
