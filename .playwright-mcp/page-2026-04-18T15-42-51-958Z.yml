@@ -1,0 +1,21 @@
+- main [ref=e2]:
+  - button "Toggle theme" [ref=e3]:
+    - img [ref=e5]
+    - img [ref=e8]
+  - article [ref=e11]:
+    - img "Akemi" [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - heading "Akemi" [level=1] [ref=e16]
+        - generic "Verified profile" [ref=e17]:
+          - img [ref=e18]
+          - img [ref=e20]
+      - paragraph [ref=e22]:
+        - text: Product Designer who focuses
+        - text: on simplicity & usability.
+      - generic [ref=e23]:
+        - button "About" [ref=e24]
+        - button "Message" [ref=e25]
+        - button "Follow" [ref=e26]:
+          - text: Follow
+          - img [ref=e27]
