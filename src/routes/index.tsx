@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { User, Image as ImageIcon, Plus, Check, Sun, Moon, MessageCircle, Info } from "lucide-react";
+import { User, Image as ImageIcon, Plus, Check, Sun, Moon } from "lucide-react";
 import profileImg from "@/assets/profile-sophie.jpg";
 
 export const Route = createFileRoute("/")({
@@ -70,17 +70,15 @@ function Index() {
           <div className="mt-5 grid grid-cols-3 gap-2">
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1 rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
             >
               About
-              <Info className="h-4 w-4" strokeWidth={2} />
             </button>
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1 rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
             >
               Message
-              <MessageCircle className="h-4 w-4" strokeWidth={2} />
             </button>
             <button
               type="button"
