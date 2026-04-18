@@ -79,6 +79,151 @@ button {
   padding: 40px 16px;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: var(--ring-shadow);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--secondary);
+}
+
+.theme-toggle:active {
+  transform: scale(0.96);
+}
+
+.theme-toggle__icon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle__icon--sun {
+  opacity: 0;
+  transform: scale(0.65) rotate(-30deg);
+}
+
+html.dark .theme-toggle__icon--sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+html.dark .theme-toggle__icon--moon {
+  opacity: 0;
+  transform: scale(0.65) rotate(30deg);
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--radius-card);
+  background: var(--card);
+  padding: 14px;
+  box-shadow: var(--card-shadow);
+  animation: profile-card-fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+@keyframes profile-card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card__image-wrap {
+  overflow: hidden;
+  border-radius: var(--radius-inner);
+}
+
+.profile-card__image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.profile-card__content {
+  padding: 20px 12px 10px;
+}
+
+.profile-card__heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-card__name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.verified-badge {
+  position: relative;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.verified-badge__burst {
+  position: absolute;
+  inset: 0;
+  fill: var(--verified);
+}
+
+.verified-badge__check {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  color: #fff;
+}
+
+.profile-card__bio {
+  margin: 8px 0 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.profile-card iframe {
+  margin-top: 16px;
+  display: block;
+}
+
 .profile-card__actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
