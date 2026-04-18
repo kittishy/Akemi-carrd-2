@@ -222,6 +222,7 @@ html.dark .theme-toggle__icon--moon {
 .profile-card iframe {
   margin-top: 16px;
   display: block;
+  overflow: hidden;
 }
 
 .profile-card__actions {
