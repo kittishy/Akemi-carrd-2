@@ -82,10 +82,10 @@ function Index() {
             </button>
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1 rounded-full bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+              className="group inline-flex items-center justify-center gap-1 rounded-full bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-all duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_8px_24px_-6px_oklch(var(--primary)/0.55)] active:scale-[0.98]"
             >
               Follow
-              <Plus className="h-4 w-4" strokeWidth={2.2} />
+              <Plus className="h-4 w-4 transition-transform duration-300 group-hover:rotate-90" strokeWidth={2.2} />
             </button>
           </div>
         </div>
