@@ -222,7 +222,12 @@ html.dark .theme-toggle__icon--moon {
 .profile-card iframe {
   margin-top: 16px;
   display: block;
+  border: none;
   overflow: hidden;
+}
+
+html.dark .profile-card iframe {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .profile-card__actions {
