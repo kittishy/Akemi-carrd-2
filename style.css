@@ -219,17 +219,6 @@ html.dark .theme-toggle__icon--moon {
   line-height: 1.35;
 }
 
-.profile-card iframe {
-  margin-top: 16px;
-  display: block;
-  border: none;
-  overflow: hidden;
-}
-
-html.dark .profile-card iframe {
-  filter: invert(1) hue-rotate(180deg);
-}
-
 .profile-card__actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
