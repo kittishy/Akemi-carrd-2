@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Sophie Bennett — Product Designer" },
+      { title: "Akemi — Product Designer" },
       { name: "description", content: "Product Designer who focuses on simplicity & usability." },
     ],
   }),
@@ -46,7 +46,7 @@ function Index() {
         <div className="overflow-hidden rounded-[20px]">
           <img
             src={profileImg}
-            alt="Sophie Bennett"
+            alt="Akemi"
             width={768}
             height={896}
             className="h-[300px] w-full object-cover"
@@ -56,7 +56,7 @@ function Index() {
         <div className="px-2 pb-2 pt-5">
           <div className="flex items-center gap-1.5">
             <h1 className="text-[18px] font-semibold tracking-tight text-foreground">
-              Sophie Bennett
+              Akemi
             </h1>
             <VerifiedBadge />
           </div>
