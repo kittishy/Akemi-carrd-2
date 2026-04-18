@@ -67,11 +67,22 @@ function Index() {
             on simplicity &amp; usability.
           </p>
 
-          <div className="mt-5 flex items-center justify-end">
-
+          <div className="mt-5 grid grid-cols-3 gap-2">
             <button
               type="button"
-              className="inline-flex items-center gap-1 rounded-full bg-secondary px-4 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+            >
+              About
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
+            >
+              Message
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center gap-1 rounded-full bg-secondary px-3 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary/70"
             >
               Follow
               <Plus className="h-4 w-4" strokeWidth={2.2} />
