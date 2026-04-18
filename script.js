@@ -251,6 +251,7 @@ if (window.location.protocol === "file:") {
    LANYARD DISCORD ACTIVITIES — WebSocket with REST fallback
    ================================================================ */
 (function () {
+  return; // Temporarily disabled by user
   var DISCORD_USER_ID = "334980960351158276";
   var WS_URL = "wss://api.lanyard.rest/socket";
   var REST_URL = "https://api.lanyard.rest/v1/users/" + DISCORD_USER_ID;
