@@ -67,17 +67,7 @@ function Index() {
             on simplicity &amp; usability.
           </p>
 
-          <div className="mt-5 flex items-center justify-between">
-            <div className="flex items-center gap-4 text-[13px] text-foreground">
-              <span className="flex items-center gap-1.5">
-                <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
-                <span>312</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <ImageIcon className="h-[15px] w-[15px]" strokeWidth={1.8} />
-                <span>48</span>
-              </span>
-            </div>
+          <div className="mt-5 flex items-center justify-end">
 
             <button
               type="button"
