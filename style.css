@@ -73,7 +73,6 @@ button {
 .page {
   position: relative;
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
@@ -81,15 +80,14 @@ button {
 }
 
 .spotify-embed {
-  display: flex;
-  justify-content: center;
-  padding: 24px 0;
+  margin-top: 16px;
   width: 100%;
-  max-width: 320px;
 }
 
 .spotify-embed iframe {
+  width: 100% !important;
   max-width: 100%;
+}
 }
 
 .theme-toggle {
