@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { User, Image as ImageIcon, Plus, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { User, Image as ImageIcon, Plus, Check, Sun, Moon } from "lucide-react";
 import profileImg from "@/assets/profile-sophie.jpg";
 
 export const Route = createFileRoute("/")({
@@ -24,8 +25,23 @@ function VerifiedBadge() {
 }
 
 function Index() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
+    <main className="relative flex min-h-screen items-center justify-center bg-background px-4 py-10">
+      <button
+        type="button"
+        onClick={() => setDark((d) => !d)}
+        aria-label="Toggle theme"
+        className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-card text-foreground shadow-sm transition-colors hover:bg-secondary"
+      >
+        {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      </button>
+
       <article className="w-full max-w-[320px] rounded-[28px] bg-card p-3 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.18)]">
         <div className="overflow-hidden rounded-[20px]">
           <img
