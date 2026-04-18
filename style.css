@@ -211,6 +211,11 @@ html.dark .theme-toggle__icon--moon {
   line-height: 1.35;
 }
 
+.profile-card iframe {
+  margin-top: 16px;
+  display: block;
+}
+
 .profile-card__actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
