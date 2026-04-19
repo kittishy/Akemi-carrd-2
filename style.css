@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
 
 :root {
   --radius-card: 28px;
@@ -61,7 +61,7 @@ body {
     radial-gradient(circle at 20% 90%, color-mix(in oklab, #6fe3c2 28%, transparent) 0%, transparent 50%);
   background-attachment: fixed;
   color: var(--foreground);
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -211,6 +211,31 @@ html.dark .profile-card {
   }
 }
 
+@keyframes element-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card__image-wrap,
+.profile-card__heading,
+.profile-card__bio,
+#container06,
+.profile-card__actions {
+  animation: element-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.profile-card__image-wrap { animation-delay: 0.15s; }
+.profile-card__heading    { animation-delay: 0.30s; }
+.profile-card__bio        { animation-delay: 0.40s; }
+#container06              { animation-delay: 0.50s; }
+.profile-card__actions    { animation-delay: 0.60s; }
+
 .profile-card__image-wrap {
   overflow: hidden;
   border-radius: var(--radius-inner);
@@ -234,9 +259,10 @@ html.dark .profile-card {
 
 .profile-card__name {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: 'Syne', 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .verified-badge {
@@ -283,6 +309,7 @@ html.dark .profile-card {
 }
 
 .action-button {
+  position: relative;
   display: inline-flex;
   min-height: 40px;
   align-items: center;
@@ -290,11 +317,13 @@ html.dark .profile-card {
   border-radius: var(--radius-pill);
   padding: 8px 12px;
   cursor: pointer;
+  overflow: hidden;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.25s ease;
 }
 
 .action-button--secondary {
@@ -311,7 +340,31 @@ html.dark .profile-card {
 }
 
 .action-button--secondary:hover {
-  background: color-mix(in oklab, var(--secondary) 85%, transparent);
+  background: color-mix(in oklab, var(--secondary) 95%, transparent);
+  border-color: color-mix(in oklab, var(--foreground) 25%, transparent);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 40%, transparent),
+    0 6px 16px -6px color-mix(in oklab, var(--foreground) 30%, transparent);
+}
+
+/* Animated underline for secondary buttons */
+.action-button--secondary::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.7;
+}
+
+.action-button--secondary:hover::after {
+  width: 40%;
 }
 
 html.dark .action-button--secondary {
@@ -349,8 +402,10 @@ html.dark .action-button--secondary:hover {
 }
 
 .follow-button:hover {
-  transform: scale(1.04);
-  box-shadow: var(--follow-shadow);
+  transform: translateY(-1px) scale(1.04);
+  box-shadow:
+    var(--follow-shadow),
+    0 0 24px -4px color-mix(in oklab, var(--primary) 55%, transparent);
 }
 
 .follow-button:hover .follow-button__icon {
@@ -364,7 +419,56 @@ html.dark .action-button--secondary:hover {
 
 @media (max-width: 480px) {
   .page {
-    padding-top: 64px;
+    padding: 64px 12px 24px;
+  }
+
+  .profile-card__image {
+    height: 260px;
+  }
+
+  .profile-card__name {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 374px) {
+  .page {
+    padding: 56px 8px 20px;
+  }
+
+  .profile-card {
+    padding: 10px;
+    border-radius: 22px;
+  }
+
+  .profile-card__image {
+    height: 220px;
+  }
+
+  .profile-card__content {
+    padding: 12px 8px 6px;
+  }
+
+  .profile-card__name {
+    font-size: 18px;
+  }
+
+  .profile-card__bio {
+    font-size: 13px;
+  }
+
+  .profile-card__actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .follow-button {
+    grid-column: span 2;
+  }
+
+  .action-button {
+    min-height: 38px;
+    font-size: 12.5px;
   }
 }
 
