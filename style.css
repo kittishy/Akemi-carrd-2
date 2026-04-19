@@ -142,13 +142,25 @@ html.dark .theme-toggle__icon--moon {
   width: 100%;
   max-width: 350px;
   border-radius: var(--radius-card);
-  background: var(--card);
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   padding: 14px;
-  box-shadow: var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 30%, transparent),
+    var(--card-shadow);
   animation: profile-card-fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   transition:
     background-color 0.2s ease,
     box-shadow 0.2s ease;
+}
+
+html.dark .profile-card {
+  border-color: color-mix(in oklab, #ffffff 8%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 6%, transparent),
+    var(--card-shadow);
 }
 
 @keyframes profile-card-fade-in {
