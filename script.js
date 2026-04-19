@@ -109,9 +109,23 @@ if (window.location.protocol === "file:") {
     else el.textContent = value;
   };
 
+  const labelEl = rootEl.querySelector(".now-playing-label");
+  const pulseEl = rootEl.querySelector(".now-playing-pulse");
+
   const writeTrack = (payload) => {
     const nextTrack = payload && payload.track ? payload.track : null;
     if (!nextTrack) return;
+
+    // Update label based on playing vs recently played
+    if (labelEl) {
+      const isLive = payload.status === "playing";
+      labelEl.textContent = "";
+      if (pulseEl) {
+        pulseEl.style.display = isLive ? "" : "none";
+        labelEl.appendChild(pulseEl);
+      }
+      labelEl.appendChild(document.createTextNode(isLive ? "Listening" : "Last played"));
+    }
 
     const nextTrackKey = [nextTrack.artist, nextTrack.name, nextTrack.album]
       .filter(Boolean)
@@ -129,7 +143,7 @@ if (window.location.protocol === "file:") {
     }
 
     lastTrackKey = nextTrackKey;
-    lastTrackUrl = lastTrackUrl;
+    lastTrackUrl = nextTrackUrl;
     lastTrackImage = nextTrackImage;
 
     setText(trackEl, nextTrack.name || "Unknown track");
@@ -225,11 +239,13 @@ if (window.location.protocol === "file:") {
       }
 
       errorCount = 0;
-      if (payload && payload.status === "playing") {
+      if (payload && (payload.status === "playing" || payload.status === "recent")) {
         writeTrack(payload);
-        lastPlayingAt = Date.now();
+        if (payload.status === "playing") {
+          lastPlayingAt = Date.now();
+        }
         setMode("now-playing");
-        schedule(POLL_PLAYING);
+        schedule(payload.status === "playing" ? POLL_PLAYING : POLL_IDLE);
         return;
       }
 

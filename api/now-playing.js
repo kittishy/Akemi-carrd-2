@@ -64,8 +64,7 @@ const extractImageUrl = (track) => {
 };
 
 const normalizePayload = (track) => {
-  const nowPlaying = safeText(track && track["@attr"] && track["@attr"].nowplaying).toLowerCase() === "true";
-  if (!nowPlaying) {
+  if (!track) {
     return {
       status: "idle",
       track: null,
@@ -75,14 +74,26 @@ const normalizePayload = (track) => {
     };
   }
 
-  const artistName = safeText(track && track.artist && track.artist["#text"]);
-  const trackName = safeText(track && track.name);
-  const albumName = safeText(track && track.album && track.album["#text"]);
-  const trackUrl = safeText(track && track.url);
+  const nowPlaying = safeText(track["@attr"] && track["@attr"].nowplaying).toLowerCase() === "true";
+  const artistName = safeText(track.artist && track.artist["#text"]);
+  const trackName = safeText(track.name);
+  const albumName = safeText(track.album && track.album["#text"]);
+  const trackUrl = safeText(track.url);
   const imageUrl = extractImageUrl(track);
 
+  // If there's no meaningful track data, treat as idle
+  if (!trackName && !artistName) {
+    return {
+      status: "idle",
+      track: null,
+      source: "lastfm",
+      updatedAt: new Date().toISOString(),
+      isStale: false
+    };
+  }
+
   return {
-    status: "playing",
+    status: nowPlaying ? "playing" : "recent",
     track: {
       name: sanitizeOutput(trackName),
       artist: sanitizeOutput(artistName),

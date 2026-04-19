@@ -1033,3 +1033,4 @@ html:not(.dark) .action-button--primary {
     height: 380px;
   }
 }
+.profile-status { display: none; }
