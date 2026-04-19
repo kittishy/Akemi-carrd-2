@@ -599,6 +599,20 @@ if (window.location.protocol === "file:") {
 })();
 
 /* ================================================================
+   FOLLOW BUTTON
+   ================================================================ */
+(function () {
+  var followBtn = document.getElementById("follow-btn");
+  if (!followBtn) return;
+
+  followBtn.addEventListener("click", function () {
+    setTimeout(function () {
+      window.open("https://discord.com/users/334980960351158276", "_blank", "noopener,noreferrer");
+    }, 220);
+  });
+})();
+
+/* ================================================================
    ABOUT PANEL
    ================================================================ */
 (function () {
@@ -628,10 +642,31 @@ if (window.location.protocol === "file:") {
   aboutBtn.addEventListener("click", openAbout);
   aboutBackBtn.addEventListener("click", closeAbout);
 
-  // Close on Escape key
+  // Close on Escape key + focus trap
   aboutPanel.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       closeAbout();
+      return;
+    }
+    // Simple focus trap: keep Tab within the panel when open
+    if (e.key === "Tab" && aboutPanel.classList.contains("is-open")) {
+      var focusable = aboutPanel.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
   });
 })();
