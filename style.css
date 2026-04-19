@@ -7,8 +7,11 @@
   --background: #f5f5f7;
   --foreground: #1d1d1f;
   --card: #ffffff;
+  --card-bg: #ffffff;
   --primary: #1d1d1f;
   --primary-foreground: #ffffff;
+  --follow-bg: #1d1d1f;
+  --follow-fg: #ffffff;
   --secondary: #e8e8ed;
   --secondary-foreground: #1d1d1f;
   --muted-foreground: #6e6e73;
@@ -26,8 +29,11 @@ html.dark {
   --background: #111111;
   --foreground: #f5f5f7;
   --card: #1c1c1e;
+  --card-bg: #1c1c1e;
   --primary: #f5f5f7;
   --primary-foreground: #1c1c1e;
+  --follow-bg: #f5f5f7;
+  --follow-fg: #1c1c1e;
   --secondary: rgba(255, 255, 255, 0.08);
   --secondary-foreground: #f5f5f7;
   --muted-foreground: #98989d;
@@ -237,8 +243,20 @@ html.dark .profile-card {
 .profile-card__actions    { animation-delay: 0.60s; }
 
 .profile-card__image-wrap {
+  position: relative;
   overflow: hidden;
   border-radius: var(--radius-inner);
+}
+
+.profile-card__image-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  background: linear-gradient(transparent, var(--card-bg));
 }
 
 .profile-card__image {
@@ -932,4 +950,14 @@ html.dark .action-button--secondary:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton::after { animation: none; opacity: 0.4; }
+}
+
+@media (min-width: 768px) {
+  .profile-card {
+    max-width: 420px;
+  }
+
+  .profile-card__image {
+    height: 380px;
+  }
 }
