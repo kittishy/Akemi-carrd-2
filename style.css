@@ -245,6 +245,24 @@ html.dark .profile-card {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .profile-card__image,
+html.dark .profile-card__image {
+  filter: brightness(0.92) contrast(1.05);
+}
+
+.profile-card__image--dark {
+  display: none;
+}
+
+html.dark .profile-card__image--light {
+  display: none;
+}
+
+html.dark .profile-card__image--dark {
+  display: block;
 }
 
 .profile-card__content {
