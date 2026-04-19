@@ -1,10 +1,33 @@
-// Theme toggle
+// Theme toggle with persistence
 const root = document.documentElement;
 const themeToggle = document.getElementById("theme-toggle");
+const THEME_STORAGE_KEY = "akemi-theme";
+
+const applyTheme = (theme) => {
+  root.classList.toggle("dark", theme === "dark");
+};
+
+try {
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+
+  applyTheme(savedTheme || preferredTheme);
+} catch {
+  applyTheme("light");
+}
 
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
-    root.classList.toggle("dark");
+    const nextTheme = root.classList.contains("dark") ? "light" : "dark";
+    applyTheme(nextTheme);
+
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      // Ignore localStorage write failures.
+    }
   });
 }
 
@@ -45,7 +68,7 @@ if (window.location.protocol === "file:") {
     }
   };
 
-  let mode = "spotify";
+  let mode = "idle";
   let timer = null;
   let etag = "";
   let inFlightController = null;
@@ -69,17 +92,6 @@ if (window.location.protocol === "file:") {
     if (mode === nextMode) return;
     mode = nextMode;
     rootEl.classList.toggle("is-now-playing", nextMode === "now-playing");
-
-    if (nextMode === "spotify") {
-      const iframe = document.getElementById("spotify-player");
-      if (
-        iframe &&
-        iframe.dataset.src &&
-        (!iframe.src || iframe.src === "about:blank")
-      ) {
-        iframe.src = iframe.dataset.src;
-      }
-    }
   };
 
   const cardEl = document.getElementById("now-playing-card");
@@ -160,6 +172,17 @@ if (window.location.protocol === "file:") {
       const responseEtag = response.headers.get("ETag");
       if (responseEtag) etag = responseEtag;
 
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        return {
+          status: "idle",
+          track: null,
+          source: "fallback",
+          updatedAt: new Date().toISOString(),
+          isStale: true,
+        };
+      }
+
       return await response.json();
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -180,7 +203,7 @@ if (window.location.protocol === "file:") {
       schedule(POLL_HIDDEN);
       return;
     }
-    setMode("spotify");
+    setMode("idle");
     schedule(POLL_HIDDEN);
   };
 
@@ -210,7 +233,7 @@ if (window.location.protocol === "file:") {
         return;
       }
 
-      setMode("spotify");
+      setMode("idle");
       schedule(POLL_IDLE);
     } catch (_error) {
       errorCount += 1;
@@ -225,7 +248,7 @@ if (window.location.protocol === "file:") {
         schedule(errorPoll);
         return;
       }
-      setMode("spotify");
+      setMode("idle");
       schedule(errorPoll);
     }
   };
@@ -251,18 +274,6 @@ if (window.location.protocol === "file:") {
   window.addEventListener("offline", handleOffline);
 
   runUpdate();
-
-  // Initial fallback load for Spotify
-  window.setTimeout(function () {
-    const iframe = document.getElementById("spotify-player");
-    if (
-      iframe &&
-      iframe.dataset.src &&
-      (!iframe.src || iframe.src === "about:blank")
-    ) {
-      iframe.src = iframe.dataset.src;
-    }
-  }, 3000);
 })();
 
 /* ================================================================
