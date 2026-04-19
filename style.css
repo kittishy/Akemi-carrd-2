@@ -783,3 +783,101 @@ html.dark .action-button--secondary:hover {
     font-size: 13px;
   }
 }
+
+/* ==========================================================================
+   SKELETON LOADER (Now Playing)
+   ========================================================================== */
+
+.now-playing-art-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+}
+
+.now-playing-art-wrap .now-playing-art {
+  width: 100%;
+  height: 100%;
+}
+
+.now-playing-info {
+  min-width: 0;
+}
+
+#now-playing-card.is-loading .now-playing-art {
+  opacity: 0;
+}
+
+#now-playing-card.is-loading .now-playing-text {
+  opacity: 0;
+}
+
+#now-playing-card.is-loading .now-playing-link {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skeleton {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--foreground) 10%, transparent) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+#now-playing-card.is-loading .skeleton {
+  display: block;
+}
+
+.skeleton--art {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+
+.now-playing-track,
+.now-playing-artist {
+  position: relative;
+  min-height: 1em;
+}
+
+.skeleton--line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 11px;
+  border-radius: 6px;
+}
+
+#now-playing-card.is-loading .skeleton--line::after {
+  animation-delay: 0.1s;
+}
+
+.skeleton--line-track { width: 70%; height: 12px; }
+.skeleton--line-artist { width: 45%; height: 10px; }
+
+@media (max-width: 480px) {
+  .now-playing-art-wrap { width: 44px; height: 44px; }
+  .skeleton--art { border-radius: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; opacity: 0.4; }
+}
