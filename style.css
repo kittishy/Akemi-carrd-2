@@ -866,6 +866,33 @@ html:not(.dark) .action-button--primary {
   border: 1px solid var(--border);
 }
 
+/* Two-layer crossfade: both images are absolutely stacked inside the wrap */
+.now-playing-art--layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 450ms ease-in-out;
+  will-change: opacity;
+}
+
+/* The active layer is fully visible */
+.now-playing-art--layer.is-active {
+  opacity: 1;
+}
+
+/* During crossfade the outgoing layer fades out simultaneously */
+.now-playing-art--layer.is-fading-out {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .now-playing-art--layer {
+    transition: none;
+  }
+}
+
 .now-playing-label {
   font-size: 10.5px;
   font-weight: 600;
@@ -946,9 +973,12 @@ html:not(.dark) .action-button--primary {
     padding: 10px;
   }
 
-  .now-playing-art {
+  .now-playing-art-wrap {
     width: 44px;
     height: 44px;
+  }
+
+  .now-playing-art--layer {
     border-radius: 10px;
   }
 
@@ -980,17 +1010,14 @@ html:not(.dark) .action-button--primary {
   height: 52px;
 }
 
-.now-playing-art-wrap .now-playing-art {
-  width: 100%;
-  height: 100%;
-}
-
 .now-playing-info {
   min-width: 0;
 }
 
+.now-playing-text { display: inline-block; }
+
 /* Default revealed state — fade + slight rise */
-.now-playing-art,
+.now-playing-art--layer.is-active,
 .now-playing-text,
 .now-playing-link {
   opacity: 1;
@@ -1000,9 +1027,7 @@ html:not(.dark) .action-button--primary {
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.now-playing-text { display: inline-block; }
-
-#now-playing-card.is-loading .now-playing-art,
+#now-playing-card.is-loading .now-playing-art--layer,
 #now-playing-card.is-loading .now-playing-text,
 #now-playing-card.is-loading .now-playing-link {
   opacity: 0;
@@ -1014,10 +1039,10 @@ html:not(.dark) .action-button--primary {
 }
 
 /* Stagger reveal */
-.now-playing-art        { transition-delay: 0.05s; }
+.now-playing-art--layer   { transition-delay: 0.05s; }
 #now-playing-track .now-playing-text  { transition-delay: 0.12s; }
 #now-playing-artist .now-playing-text { transition-delay: 0.20s; }
-.now-playing-link       { transition-delay: 0.28s; }
+.now-playing-link         { transition-delay: 0.28s; }
 
 /* Fade-out the skeleton itself */
 .skeleton {
@@ -1028,7 +1053,7 @@ html:not(.dark) .action-button--primary {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .now-playing-art,
+  .now-playing-art--layer,
   .now-playing-text,
   .now-playing-link {
     transition: opacity 0.2s ease;
@@ -1094,7 +1119,6 @@ html:not(.dark) .action-button--primary {
 .skeleton--line-artist { width: 45%; height: 10px; }
 
 @media (max-width: 480px) {
-  .now-playing-art-wrap { width: 44px; height: 44px; }
   .skeleton--art { border-radius: 10px; }
 }
 

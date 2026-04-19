@@ -43,12 +43,13 @@ if (window.location.protocol === "file:") {
    ================================================================ */
 (function () {
   const rootEl = document.getElementById("container06");
-  const artEl = document.getElementById("now-playing-art");
+  const artLayerA = document.getElementById("now-playing-art-a");
+  const artLayerB = document.getElementById("now-playing-art-b");
   const trackEl = document.getElementById("now-playing-track");
   const artistEl = document.getElementById("now-playing-artist");
   const linkEl = document.getElementById("now-playing-link");
 
-  if (!rootEl || !trackEl || !artistEl || !linkEl || !artEl) return;
+  if (!rootEl || !trackEl || !artistEl || !linkEl || !artLayerA || !artLayerB) return;
 
   const POLL_PLAYING = 5000;
   const POLL_IDLE = 30000;
@@ -58,15 +59,129 @@ if (window.location.protocol === "file:") {
   const STALE_KEEP_PLAYING_MS = 120000;
   const DEFAULT_ART = "./assets/Haimiya-senpai wa Kowakute Kawaii.jpg";
   const endpoint = "/api/now-playing";
+  const CROSSFADE_MS = 450;
 
-  artEl.onerror = function () {
-    if (!this.src.endsWith(DEFAULT_ART) && !this.src.includes(DEFAULT_ART)) {
+  // Detect reduced-motion preference (live MediaQueryList so it respects OS changes)
+  const reduceMotionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const prefersReducedMotion = () => reduceMotionMQ.matches;
+
+  // ── Album-art crossfade state ────────────────────────────────────────────
+  // "active" tracks which layer is currently visible on top.
+  // Layer A starts as active (it has the initial src from HTML).
+  let activeLayer = artLayerA;   // currently visible layer
+  let inactiveLayer = artLayerB; // hidden back layer
+
+  // Initialise: mark A as active immediately (no animation on first paint)
+  artLayerA.classList.add("is-active");
+  artLayerB.classList.remove("is-active");
+
+  // Pending crossfade timer so we can cancel if a rapid update arrives
+  let crossfadeTimer = null;
+
+  /**
+   * Crossfade album art to a new URL.
+   * - If URL hasn't changed → no-op.
+   * - If prefers-reduced-motion → instant swap.
+   * - Otherwise → true simultaneous crossfade via two stacked layers.
+   *
+   * @param {string} newSrc  The new image URL to display.
+   * @param {boolean} instant  Force an instant swap (used on first load).
+   */
+  const crossfadeArt = (newSrc, instant = false) => {
+    const currentSrc = activeLayer.src
+      ? new URL(activeLayer.src, document.baseURI).href
+      : "";
+    const resolvedNew = newSrc
+      ? new URL(newSrc, document.baseURI).href
+      : new URL(DEFAULT_ART, document.baseURI).href;
+
+    // Skip if same image
+    if (currentSrc === resolvedNew) return;
+
+    // Cancel any in-flight crossfade
+    if (crossfadeTimer !== null) {
+      clearTimeout(crossfadeTimer);
+      crossfadeTimer = null;
+      // Snap pending state: ensure previous transition completed cleanly
+      activeLayer.classList.add("is-active");
+      activeLayer.classList.remove("is-fading-out");
+      inactiveLayer.classList.remove("is-active");
+      inactiveLayer.classList.remove("is-fading-out");
+    }
+
+    if (instant || prefersReducedMotion()) {
+      // Instant swap — no transition
+      activeLayer.src = resolvedNew;
+      activeLayer.setAttribute("alt", "Current track artwork");
+      activeLayer.removeAttribute("aria-hidden");
+      inactiveLayer.src = "";
+      inactiveLayer.setAttribute("aria-hidden", "true");
+      return;
+    }
+
+    // ── True crossfade ──────────────────────────────────────────────────────
+    // 1. Load the new image into the inactive (back) layer.
+    inactiveLayer.src = resolvedNew;
+    inactiveLayer.setAttribute("alt", "Current track artwork");
+    inactiveLayer.removeAttribute("aria-hidden");
+
+    // 2. Once the new image is decoded, start the crossfade.
+    const startCrossfade = () => {
+      // Bring inactive layer to top (z-index via is-active class opacity=1)
+      inactiveLayer.classList.add("is-active");
+      // Fade out the previously active layer
+      activeLayer.classList.add("is-fading-out");
+      activeLayer.classList.remove("is-active");
+
+      // After transition duration, clean up the outgoing layer
+      crossfadeTimer = setTimeout(() => {
+        crossfadeTimer = null;
+        const outgoing = activeLayer; // capture before swap
+        // Swap references
+        activeLayer = inactiveLayer;
+        inactiveLayer = outgoing;
+
+        // Reset outgoing layer
+        inactiveLayer.classList.remove("is-active", "is-fading-out");
+        inactiveLayer.src = "";
+        inactiveLayer.setAttribute("aria-hidden", "true");
+        inactiveLayer.removeAttribute("alt");
+      }, CROSSFADE_MS + 50); // +50ms grace over transition duration
+    };
+
+    // Use decode() for smooth paint — fall back to onload if not supported
+    if (inactiveLayer.decode) {
+      inactiveLayer.decode().then(startCrossfade).catch(startCrossfade);
+    } else {
+      if (inactiveLayer.complete && inactiveLayer.naturalWidth > 0) {
+        startCrossfade();
+      } else {
+        inactiveLayer.onload = () => {
+          inactiveLayer.onload = null;
+          startCrossfade();
+        };
+        inactiveLayer.onerror = () => {
+          inactiveLayer.onerror = null;
+          // Fall back to default art if new image fails
+          inactiveLayer.src = DEFAULT_ART;
+          startCrossfade();
+        };
+      }
+    }
+  };
+
+  // Shared error handler: fall back to default art on both layers
+  const makeArtErrorHandler = (otherLayer) => function () {
+    const fallback = new URL(DEFAULT_ART, document.baseURI).href;
+    if (this.src !== fallback) {
       this.onerror = null;
       this.src = DEFAULT_ART;
     } else {
       this.onerror = null;
     }
   };
+  artLayerA.onerror = makeArtErrorHandler(artLayerB);
+  artLayerB.onerror = makeArtErrorHandler(artLayerA);
 
   let mode = "idle";
   let timer = null;
@@ -112,6 +227,9 @@ if (window.location.protocol === "file:") {
   const labelEl = rootEl.querySelector(".now-playing-label");
   const pulseEl = rootEl.querySelector(".now-playing-pulse");
 
+  // Track whether this is the very first data load (no crossfade on initial paint)
+  let isFirstLoad = true;
+
   const writeTrack = (payload) => {
     const nextTrack = payload && payload.track ? payload.track : null;
     if (!nextTrack) return;
@@ -149,7 +267,11 @@ if (window.location.protocol === "file:") {
     setText(trackEl, nextTrack.name || "Unknown track");
     setText(artistEl, nextTrack.artist || "Unknown artist");
     linkEl.href = nextTrackUrl;
-    artEl.src = nextTrackImage;
+
+    // Crossfade album art — instant on first load, animated thereafter
+    crossfadeArt(nextTrackImage, isFirstLoad);
+    isFirstLoad = false;
+
     clearLoading();
   };
 
