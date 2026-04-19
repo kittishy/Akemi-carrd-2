@@ -177,15 +177,15 @@ const getCachedNowPlaying = async (apiKey, username) => {
           ..._serverCache.payload,
           isStale: true,
           updatedAt: new Date().toISOString()
-        }
-      };
+  }
+}
     }
 
     throw error;
   }
-};
+}
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     res.status(405).json({ status: "error", message: "Method not allowed" });
