@@ -17,6 +17,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "i18n.js",
+      "use": "@vercel/static"
+    },
+    {
       "src": "assets/**",
       "use": "@vercel/static"
     }
