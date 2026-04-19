@@ -325,6 +325,7 @@ html.dark .profile-card__image--dark {
 
 .profile-card__bio {
   margin: 8px 0 0;
+  max-width: 280px;
   color: var(--muted-foreground);
   font-size: 14px;
   line-height: 1.35;
@@ -425,6 +426,11 @@ html.dark .action-button--secondary:hover {
   box-shadow:
     inset 0 1px 0 color-mix(in oklab, #ffffff 18%, transparent),
     0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+html:not(.dark) .action-button--primary {
+  background: #4a4a4f;
+  border-color: #3a3a3f;
 }
 
 .follow-button {
