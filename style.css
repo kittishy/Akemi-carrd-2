@@ -54,11 +54,25 @@ body {
 
 body {
   background: var(--background);
+  background-image:
+    radial-gradient(circle at 18% 22%, color-mix(in oklab, #7aa2ff 38%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 82% 18%, color-mix(in oklab, #ff8fb1 32%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 75% 85%, color-mix(in oklab, #9b8cff 35%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 20% 90%, color-mix(in oklab, #6fe3c2 28%, transparent) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+html.dark body {
+  background-image:
+    radial-gradient(circle at 18% 22%, color-mix(in oklab, #4a6cff 28%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 82% 18%, color-mix(in oklab, #ff5e8a 22%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 75% 85%, color-mix(in oklab, #7d5cff 26%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 20% 90%, color-mix(in oklab, #2dd4bf 18%, transparent) 0%, transparent 50%);
 }
 
 button,
