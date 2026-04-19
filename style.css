@@ -325,7 +325,7 @@ html.dark .profile-card__image--dark {
 
 .profile-card__bio {
   margin: 8px 0 0;
-  max-width: 280px;
+  max-width: 260px;
   color: var(--muted-foreground);
   font-size: 14px;
   line-height: 1.35;
@@ -959,6 +959,10 @@ html:not(.dark) .action-button--primary {
 }
 
 @media (min-width: 768px) {
+  .page {
+    padding-bottom: 80px;
+  }
+
   .profile-card {
     max-width: 420px;
   }
