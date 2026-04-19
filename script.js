@@ -82,6 +82,21 @@ if (window.location.protocol === "file:") {
     }
   };
 
+  const cardEl = document.getElementById("now-playing-card");
+
+  const clearLoading = () => {
+    if (cardEl && cardEl.classList.contains("is-loading")) {
+      cardEl.classList.remove("is-loading");
+      cardEl.removeAttribute("aria-busy");
+    }
+  };
+
+  const setText = (el, value) => {
+    const span = el.querySelector(".now-playing-text");
+    if (span) span.textContent = value;
+    else el.textContent = value;
+  };
+
   const writeTrack = (payload) => {
     const nextTrack = payload && payload.track ? payload.track : null;
     if (!nextTrack) return;
@@ -96,17 +111,20 @@ if (window.location.protocol === "file:") {
       nextTrackKey === lastTrackKey &&
       nextTrackUrl === lastTrackUrl &&
       nextTrackImage === lastTrackImage
-    )
+    ) {
+      clearLoading();
       return;
+    }
 
     lastTrackKey = nextTrackKey;
     lastTrackUrl = lastTrackUrl;
     lastTrackImage = nextTrackImage;
 
-    trackEl.textContent = nextTrack.name || "Unknown track";
-    artistEl.textContent = nextTrack.artist || "Unknown artist";
+    setText(trackEl, nextTrack.name || "Unknown track");
+    setText(artistEl, nextTrack.artist || "Unknown artist");
     linkEl.href = nextTrackUrl;
     artEl.src = nextTrackImage;
+    clearLoading();
   };
 
   const fetchNowPlaying = async () => {
