@@ -250,26 +250,44 @@ html.dark .theme-toggle__icon--moon {
 }
 
 .action-button--secondary {
-  background: var(--secondary);
+  background: color-mix(in oklab, var(--secondary) 65%, transparent);
   color: var(--secondary-foreground);
   font-size: 13px;
   font-weight: 500;
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 35%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .action-button--secondary:hover {
-  filter: brightness(0.98);
+  background: color-mix(in oklab, var(--secondary) 85%, transparent);
+}
+
+html.dark .action-button--secondary {
+  border-color: color-mix(in oklab, #ffffff 10%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 8%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 html.dark .action-button--secondary:hover {
-  filter: brightness(1.08);
+  background: color-mix(in oklab, var(--secondary) 95%, transparent);
 }
 
 .action-button--primary {
-  background: var(--primary);
+  background: color-mix(in oklab, var(--primary) 80%, transparent);
   color: var(--primary-foreground);
   font-size: 13px;
   font-weight: 500;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  border: 1px solid color-mix(in oklab, var(--primary) 60%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #ffffff 18%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 .follow-button {
