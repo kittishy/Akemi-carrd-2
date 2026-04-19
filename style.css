@@ -803,17 +803,51 @@ html.dark .action-button--secondary:hover {
   min-width: 0;
 }
 
-#now-playing-card.is-loading .now-playing-art {
-  opacity: 0;
+/* Default revealed state — fade + slight rise */
+.now-playing-art,
+.now-playing-text,
+.now-playing-link {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-#now-playing-card.is-loading .now-playing-text {
+.now-playing-text { display: inline-block; }
+
+#now-playing-card.is-loading .now-playing-art,
+#now-playing-card.is-loading .now-playing-text,
+#now-playing-card.is-loading .now-playing-link {
   opacity: 0;
+  transform: translateY(4px);
 }
 
 #now-playing-card.is-loading .now-playing-link {
-  opacity: 0;
   pointer-events: none;
+}
+
+/* Stagger reveal */
+.now-playing-art        { transition-delay: 0.05s; }
+#now-playing-track .now-playing-text  { transition-delay: 0.12s; }
+#now-playing-artist .now-playing-text { transition-delay: 0.20s; }
+.now-playing-link       { transition-delay: 0.28s; }
+
+/* Fade-out the skeleton itself */
+.skeleton {
+  transition: opacity 0.35s ease;
+}
+#now-playing-card:not(.is-loading) .skeleton {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .now-playing-art,
+  .now-playing-text,
+  .now-playing-link {
+    transition: opacity 0.2s ease;
+    transform: none;
+  }
 }
 
 .skeleton {
