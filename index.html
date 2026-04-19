@@ -33,12 +33,15 @@
 
         <div id="container06">
           <div id="music-dynamic" aria-live="polite" aria-label="Music status">
-            <article id="now-playing-card" aria-label="Now playing on Spotify via Last.fm">
-              <img id="now-playing-art" class="now-playing-art" src="./assets/Haimiya-senpai wa Kowakute Kawaii.jpg" alt="Current track artwork" />
-              <div>
+            <article id="now-playing-card" class="is-loading" aria-label="Now playing on Spotify via Last.fm" aria-busy="true">
+              <div class="now-playing-art-wrap">
+                <img id="now-playing-art" class="now-playing-art" src="./assets/Haimiya-senpai wa Kowakute Kawaii.jpg" alt="Current track artwork" />
+                <span class="skeleton skeleton--art" aria-hidden="true"></span>
+              </div>
+              <div class="now-playing-info">
                 <p class="now-playing-label"><span class="now-playing-pulse" aria-hidden="true"></span>Listening</p>
-                <p id="now-playing-track" class="now-playing-track">Loading track...</p>
-                <p id="now-playing-artist" class="now-playing-artist">Checking Last.fm</p>
+                <p id="now-playing-track" class="now-playing-track"><span class="skeleton skeleton--line skeleton--line-track" aria-hidden="true"></span><span class="now-playing-text">Loading track...</span></p>
+                <p id="now-playing-artist" class="now-playing-artist"><span class="skeleton skeleton--line skeleton--line-artist" aria-hidden="true"></span><span class="now-playing-text">Checking Last.fm</span></p>
                 <a id="now-playing-link" class="now-playing-link" href="https://www.last.fm" target="_blank" rel="noopener noreferrer">Open on Last.fm</a>
               </div>
             </article>
