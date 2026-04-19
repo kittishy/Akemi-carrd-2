@@ -296,7 +296,6 @@ if (window.location.protocol === "file:") {
    LANYARD DISCORD ACTIVITIES — WebSocket with REST fallback
    ================================================================ */
 (function () {
-  return; // Temporarily disabled by user
   var DISCORD_USER_ID = "334980960351158276";
   var WS_URL = "wss://api.lanyard.rest/socket";
   var REST_URL = "https://api.lanyard.rest/v1/users/" + DISCORD_USER_ID;
@@ -595,6 +594,44 @@ if (window.location.protocol === "file:") {
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       fetchREST();
       connectWS();
+    }
+  });
+})();
+
+/* ================================================================
+   ABOUT PANEL
+   ================================================================ */
+(function () {
+  var aboutBtn = document.getElementById("about-btn");
+  var aboutPanel = document.getElementById("about-panel");
+  var aboutBackBtn = document.getElementById("about-back-btn");
+
+  if (!aboutBtn || !aboutPanel || !aboutBackBtn) return;
+
+  function openAbout() {
+    aboutPanel.classList.add("is-open");
+    aboutPanel.setAttribute("aria-hidden", "false");
+    aboutBtn.setAttribute("aria-expanded", "true");
+    // Move focus to back button after transition starts
+    setTimeout(function () {
+      aboutBackBtn.focus();
+    }, 60);
+  }
+
+  function closeAbout() {
+    aboutPanel.classList.remove("is-open");
+    aboutPanel.setAttribute("aria-hidden", "true");
+    aboutBtn.setAttribute("aria-expanded", "false");
+    aboutBtn.focus();
+  }
+
+  aboutBtn.addEventListener("click", openAbout);
+  aboutBackBtn.addEventListener("click", closeAbout);
+
+  // Close on Escape key
+  aboutPanel.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeAbout();
     }
   });
 })();
