@@ -1311,7 +1311,7 @@ html.dark .about-panel__back {
 }
 
 /* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-motion: reduce) {
   .about-panel,
   .about-panel__back,
   .about-panel__body {
@@ -1321,4 +1321,56 @@ html.dark .about-panel__back {
       border-color 0.18s ease;
     transform: none !important;
   }
+}
+
+/* ==========================================================================
+   RTL SUPPORT — Arabic (dir="rtl" on <html>)
+   ========================================================================== */
+
+html[dir="rtl"] .about-panel__back {
+  /* Flip the arrow icon direction */
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .about-panel__back svg {
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .about-panel__back:hover {
+  /* Mirror the nudge direction */
+  transform: translateX(2px);
+}
+
+html[dir="rtl"] .activity-card,
+html[dir="rtl"] #now-playing-card,
+html[dir="rtl"] .music-fallback-card {
+  /* Grid columns stay the same but text aligns right */
+  direction: rtl;
+}
+
+html[dir="rtl"] .activity-art-small {
+  right: auto;
+  left: -4px;
+}
+
+html[dir="rtl"] .profile-card__bio {
+  text-align: right;
+}
+
+html[dir="rtl"] .profile-card__heading {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+html[dir="rtl"] .now-playing-label,
+html[dir="rtl"] .activity-label {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .follow-button {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .about-panel__body p {
+  text-align: right;
 }

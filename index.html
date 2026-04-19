@@ -10,11 +10,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="./style.css" />
+  <!-- i18n must load before any other script so translations apply on first paint -->
+  <script type="module" src="./i18n.js"></script>
 </head>
 
 <body>
   <main class="page">
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+    <button class="theme-toggle" id="theme-toggle" type="button"
+      data-i18n-aria="toggle_theme"
+      aria-label="Toggle theme">
       <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 0 1 11.21 3a7 7 0 1 0 9.79 9.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
       <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span>
     </button>
@@ -28,62 +32,87 @@
       <div class="profile-card__content">
         <div class="profile-card__heading">
           <h1 class="profile-card__name">Akemi</h1>
-          <span class="verified-badge" aria-label="Verified profile"><svg class="verified-badge__burst" viewBox="0 0 24 24"><path d="M12 1.5l2.39 1.74 2.95-.32 1.43 2.6 2.6 1.43-.32 2.95L22.5 12l-1.74 2.39.32 2.95-2.6 1.43-1.43 2.6-2.95-.32L12 22.5l-2.39-1.74-2.95.32-1.43-2.6-2.6-1.43.32-2.95L1.5 12l1.74-2.39-.32-2.95 2.6-1.43L6.95 2.92l2.95.32L12 1.5Z"></path></svg><svg class="verified-badge__check" viewBox="0 0 24 24" fill="none"><path d="m7 12.5 3.1 3.1L17.5 8" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="verified-badge"
+            data-i18n-aria="verified"
+            aria-label="Verified profile"><svg class="verified-badge__burst" viewBox="0 0 24 24"><path d="M12 1.5l2.39 1.74 2.95-.32 1.43 2.6 2.6 1.43-.32 2.95L22.5 12l-1.74 2.39.32 2.95-2.6 1.43-1.43 2.6-2.95-.32L12 22.5l-2.39-1.74-2.95.32-1.43-2.6-2.6-1.43.32-2.95L1.5 12l1.74-2.39-.32-2.95 2.6-1.43L6.95 2.92l2.95.32L12 1.5Z"></path></svg><svg class="verified-badge__check" viewBox="0 0 24 24" fill="none"><path d="m7 12.5 3.1 3.1L17.5 8" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
 
-        <p class="profile-card__bio">Programmer who focuses on simplicity and usability.</p>
+        <p class="profile-card__bio" data-i18n="bio">Programmer who focuses on simplicity and usability.</p>
         <div class="profile-card__meta">
         </div>
 
         <div id="container06">
-          <div class="activity-section" aria-label="Discord activity">
+          <div class="activity-section"
+            data-i18n-aria="discord_activity_aria"
+            aria-label="Discord activity">
             <div id="lanyard-activities"></div>
           </div>
-          <div id="music-dynamic" aria-live="polite" aria-label="Music status">
-            <article id="now-playing-card" class="is-loading" aria-label="Now playing on Spotify via Last.fm" aria-busy="true">
+          <div id="music-dynamic"
+            aria-live="polite"
+            data-i18n-aria="discord_music_status_aria"
+            aria-label="Music status">
+            <article id="now-playing-card" class="is-loading"
+              data-i18n-aria="music_now_playing_aria"
+              aria-label="Now playing on Spotify via Last.fm"
+              aria-busy="true">
               <div class="now-playing-art-wrap">
-                <img id="now-playing-art-a" class="now-playing-art now-playing-art--layer" src="./assets/Haimiya-senpai wa Kowakute Kawaii.jpg" alt="Current track artwork" aria-hidden="false" />
+                <img id="now-playing-art-a" class="now-playing-art now-playing-art--layer"
+                  src="./assets/Haimiya-senpai wa Kowakute Kawaii.jpg"
+                  data-i18n-aria="music_art_alt"
+                  alt="Current track artwork"
+                  aria-hidden="false" />
                 <img id="now-playing-art-b" class="now-playing-art now-playing-art--layer" alt="" aria-hidden="true" />
                 <span class="skeleton skeleton--art" aria-hidden="true"></span>
               </div>
               <div class="now-playing-info">
-                <p class="now-playing-label"><span class="now-playing-pulse" aria-hidden="true"></span>Listening</p>
-                <p id="now-playing-track" class="now-playing-track"><span class="skeleton skeleton--line skeleton--line-track" aria-hidden="true"></span><span class="now-playing-text">Loading track...</span></p>
-                <p id="now-playing-artist" class="now-playing-artist"><span class="skeleton skeleton--line skeleton--line-artist" aria-hidden="true"></span><span class="now-playing-text">Checking Last.fm</span></p>
-                <a id="now-playing-link" class="now-playing-link" href="https://www.last.fm" target="_blank" rel="noopener noreferrer">Open on Last.fm</a>
+                <p class="now-playing-label"><span class="now-playing-pulse" aria-hidden="true"></span><span data-i18n="music_listening">Listening</span></p>
+                <p id="now-playing-track" class="now-playing-track"><span class="skeleton skeleton--line skeleton--line-track" aria-hidden="true"></span><span class="now-playing-text" data-i18n="music_loading_track">Loading track...</span></p>
+                <p id="now-playing-artist" class="now-playing-artist"><span class="skeleton skeleton--line skeleton--line-artist" aria-hidden="true"></span><span class="now-playing-text" data-i18n="music_checking">Checking Last.fm</span></p>
+                <a id="now-playing-link" class="now-playing-link" href="https://www.last.fm" target="_blank" rel="noopener noreferrer" data-i18n="music_open_lastfm">Open on Last.fm</a>
               </div>
             </article>
 
-            <article id="music-fallback-card" class="music-fallback-card" aria-label="Music idle state">
+            <article id="music-fallback-card" class="music-fallback-card"
+              data-i18n-aria="music_idle_aria"
+              aria-label="Music idle state">
               <div class="music-fallback-art" aria-hidden="true">♪</div>
               <div class="music-fallback-info">
-                <p class="music-fallback-label">Music</p>
-                <p class="music-fallback-track">Nothing playing right now</p>
-                <p class="music-fallback-artist">As soon as Last.fm detects a track, it will appear here automatically.</p>
+                <p class="music-fallback-label" data-i18n="music_label">Music</p>
+                <p class="music-fallback-track" data-i18n="music_nothing">Nothing playing right now</p>
+                <p class="music-fallback-artist" data-i18n="music_fallback_hint">As soon as Last.fm detects a track, it will appear here automatically.</p>
               </div>
             </article>
           </div>
         </div>
 
         <div class="profile-card__actions">
-          <button class="action-button action-button--secondary" type="button" id="about-btn" aria-expanded="false" aria-controls="about-panel">About</button>
-          <button class="action-button action-button--primary follow-button" type="button" id="follow-btn" aria-label="Follow on Discord"><span>Follow</span><svg class="follow-button__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg></button>
+          <button class="action-button action-button--secondary" type="button" id="about-btn"
+            aria-expanded="false" aria-controls="about-panel"
+            data-i18n="btn_about">About</button>
+          <button class="action-button action-button--primary follow-button" type="button" id="follow-btn"
+            data-i18n-aria="btn_follow_aria"
+            aria-label="Follow on Discord"><span data-i18n="btn_follow">Follow</span><svg class="follow-button__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg></button>
         </div>
       </div>
 
       <!-- About panel — slides up over card content -->
-      <div class="about-panel" id="about-panel" role="region" aria-label="About Akemi" aria-hidden="true">
+      <div class="about-panel" id="about-panel" role="region"
+        data-i18n-aria="about_aria"
+        aria-label="About Akemi"
+        aria-hidden="true">
         <div class="about-panel__inner">
-          <button class="about-panel__back" id="about-back-btn" type="button" aria-label="Back to profile">
+          <button class="about-panel__back" id="about-back-btn" type="button"
+            data-i18n-aria="about_back_aria"
+            aria-label="Back to profile">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="16" height="16"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Back
+            <span data-i18n="about_back">Back</span>
           </button>
           <div class="about-panel__body">
-            <h2 class="about-panel__heading">Hey, I'm Akemi.</h2>
-            <p>22 y/o developer based in Brazil. I've been writing code since 2016, mostly driven by curiosity and a tendency to hyperfocus on things until they actually work.</p>
-            <p>I'm neurodivergent, and it shapes how I build: I think in systems, get obsessed with details, and care a lot about how things <em>feel</em> to use, not just how they look.</p>
-            <p>When I'm not coding, I'm usually lost in Cyberpunk 2077, building something absurd in Minecraft, or picking up random games.</p>
-            <p>I speak multiple languages. Currently learning to make things simpler.</p>
+            <h2 class="about-panel__heading" data-i18n="about_heading">Hey, I'm Akemi.</h2>
+            <p data-i18n="about_p1">22 y/o developer based in Brazil. I've been writing code since 2016, mostly driven by curiosity and a tendency to hyperfocus on things until they actually work.</p>
+            <p data-i18n="about_p2">I'm neurodivergent, and it shapes how I build: I think in systems, get obsessed with details, and care a lot about how things <em>feel</em> to use, not just how they look.</p>
+            <p data-i18n="about_p3">When I'm not coding, I'm usually lost in Cyberpunk 2077, building something absurd in Minecraft, or picking up random games.</p>
+            <p data-i18n="about_p4">I speak multiple languages. Currently learning to make things simpler.</p>
           </div>
         </div>
       </div>

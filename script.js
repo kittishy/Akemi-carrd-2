@@ -1,3 +1,5 @@
+import { t } from './i18n.js';
+
 // Theme toggle with persistence
 const root = document.documentElement;
 const themeToggle = document.getElementById("theme-toggle");
@@ -242,7 +244,7 @@ if (window.location.protocol === "file:") {
         pulseEl.style.display = isLive ? "" : "none";
         labelEl.appendChild(pulseEl);
       }
-      labelEl.appendChild(document.createTextNode(isLive ? "Listening" : "Last played"));
+      labelEl.appendChild(document.createTextNode(isLive ? t("music_listening") : t("music_last_played")));
     }
 
     const nextTrackKey = [nextTrack.artist, nextTrack.name, nextTrack.album]
@@ -436,13 +438,14 @@ if (window.location.protocol === "file:") {
   ).matches;
   var ELAPSED_TICK_MS = reduceMotion ? 10000 : 1000;
 
-  var ACTIVITY_LABELS = {
-    0: "Playing",
-    1: "Streaming",
-    2: "Listening to",
-    3: "Watching",
-    4: "Custom Status",
-    5: "Competing in",
+  // Activity labels are resolved lazily via t() so they always use current lang
+  var ACTIVITY_LABEL_KEYS = {
+    0: "activity_playing",
+    1: "activity_streaming",
+    2: "activity_listening",
+    3: "activity_watching",
+    4: "activity_custom",
+    5: "activity_competing",
   };
 
   var ws = null;
@@ -487,11 +490,12 @@ if (window.location.protocol === "file:") {
     var pad = function (n) {
       return n < 10 ? "0" + n : "" + n;
     };
+    var elapsed = t("activity_elapsed");
     if (hours > 0)
       return (
-        pad(hours) + ":" + pad(minutes) + ":" + pad(seconds) + " elapsed"
+        pad(hours) + ":" + pad(minutes) + ":" + pad(seconds) + " " + elapsed
       );
-    return pad(minutes) + ":" + pad(seconds) + " elapsed";
+    return pad(minutes) + ":" + pad(seconds) + " " + elapsed;
   }
 
   function clearElapsedTimers() {
@@ -503,7 +507,7 @@ if (window.location.protocol === "file:") {
 
   function buildActivityCard(activity) {
     var type = typeof activity.type === "number" ? activity.type : 0;
-    var label = ACTIVITY_LABELS[type] || "Playing";
+    var label = t(ACTIVITY_LABEL_KEYS[type] || "activity_playing");
     var appId = safeText(activity.application_id);
     var name = safeText(activity.name);
     var details = safeText(activity.details);
@@ -582,7 +586,7 @@ if (window.location.protocol === "file:") {
 
     var nameEl = document.createElement("p");
     nameEl.className = "activity-name";
-    nameEl.textContent = name || "Unknown";
+    nameEl.textContent = name || t("activity_unknown");
     info.appendChild(nameEl);
 
     if (details) {
