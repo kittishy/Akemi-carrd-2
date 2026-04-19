@@ -516,28 +516,6 @@ html:not(.dark) .action-button--primary {
   }
 }
 
-  body {
-    background-attachment: scroll;
-  }
-
-  .profile-card__image {
-    height: 260px;
-  }
-
-  .profile-card__name {
-    font-size: 20px;
-  }
-
-  .profile-card__bio {
-    max-width: 100%;
-  }
-
-  .about-panel__inner {
-    padding: 16px 16px 20px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
-  }
-}
-
 @media (max-width: 374px) {
   .page {
     padding-top: max(56px, calc(env(safe-area-inset-top, 0px) + 48px));
@@ -873,8 +851,12 @@ html:not(.dark) .action-button--primary {
   width: 100%;
   height: 100%;
   opacity: 0;
+  /* Crossfade uses GPU-composited opacity only — no layout-triggering properties.
+     will-change is intentionally omitted here; it is promoted transiently by the
+     browser during the opacity transition without needing a persistent hint.
+     Permanent will-change on both layers would waste compositor memory on
+     mid-range Android devices when no animation is in progress. */
   transition: opacity 450ms ease-in-out;
-  will-change: opacity;
 }
 
 /* The active layer is fully visible */
@@ -1016,8 +998,11 @@ html:not(.dark) .action-button--primary {
 
 .now-playing-text { display: inline-block; }
 
-/* Default revealed state — fade + slight rise */
-.now-playing-art--layer.is-active,
+/* Default revealed state — fade + slight rise for text/link elements.
+   NOTE: .now-playing-art--layer.is-active is intentionally excluded here;
+   its transition is fully controlled by the crossfade rules above (opacity 450ms).
+   Including it in this compound selector would override the crossfade duration
+   and add an unwanted transform channel on every art transition. */
 .now-playing-text,
 .now-playing-link {
   opacity: 1;
@@ -1038,8 +1023,8 @@ html:not(.dark) .action-button--primary {
   pointer-events: none;
 }
 
-/* Stagger reveal */
-.now-playing-art--layer   { transition-delay: 0.05s; }
+/* Stagger reveal — scoped to loading state only to avoid delaying crossfade transitions */
+#now-playing-card.is-loading .now-playing-art--layer { transition-delay: 0.05s; }
 #now-playing-track .now-playing-text  { transition-delay: 0.12s; }
 #now-playing-artist .now-playing-text { transition-delay: 0.20s; }
 .now-playing-link         { transition-delay: 0.28s; }
