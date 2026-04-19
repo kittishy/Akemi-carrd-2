@@ -53,6 +53,18 @@ if (window.location.protocol === "file:") {
 
   if (!rootEl || !trackEl || !artistEl || !linkEl || !artLayerA || !artLayerB) return;
 
+  // Set initial loading text via JS (not data-i18n) so i18n never overwrites dynamic content
+  const setInitialText = (el, key) => {
+    const span = el.querySelector(".now-playing-text");
+    if (span) span.textContent = t(key);
+  };
+  setInitialText(trackEl, "music_loading_track");
+  setInitialText(artistEl, "music_checking");
+
+  // Set initial label text
+  const labelTextSpan = rootEl.querySelector(".now-playing-label-text");
+  if (labelTextSpan) labelTextSpan.textContent = t("music_listening");
+
   const POLL_PLAYING = 5000;
   const POLL_IDLE = 30000;
   const POLL_HIDDEN = 300000;
