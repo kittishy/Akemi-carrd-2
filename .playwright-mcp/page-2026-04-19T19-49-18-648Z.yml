@@ -1,0 +1,41 @@
+- main [ref=e2]:
+  - button "Toggle theme" [ref=e3] [cursor=pointer]:
+    - img [ref=e5]
+    - img [ref=e8]
+  - article [ref=e11]:
+    - img "Akemi" [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - heading "Akemi" [level=1] [ref=e16]
+        - generic "Verified profile" [ref=e17]:
+          - img [ref=e18]
+          - img [ref=e20]
+      - paragraph [ref=e22]: Programmer who focuses on simplicity and usability.
+      - generic [ref=e23]:
+        - generic "Discord activity"
+        - generic "Music status" [ref=e24]:
+          - article "Music idle state" [ref=e25]:
+            - generic [ref=e26]: ♪
+            - generic [ref=e27]:
+              - paragraph [ref=e28]: Music
+              - paragraph [ref=e29]: Nothing playing right now
+              - paragraph [ref=e30]: As soon as Last.fm detects a track, it will appear here automatically.
+      - generic [ref=e31]:
+        - button "About" [ref=e32] [cursor=pointer]
+        - button "Follow on Discord" [ref=e33] [cursor=pointer]:
+          - generic [ref=e34]: Follow
+          - img [ref=e35]
+    - region:
+      - generic:
+        - button:
+          - img
+          - generic: Back
+        - generic:
+          - heading [level=2]: Hey, I'm Akemi.
+          - paragraph: 22 y/o developer based in Brazil. I've been writing code since 2016, mostly driven by curiosity and a tendency to hyperfocus on things until they actually work.
+          - paragraph:
+            - text: "I'm neurodivergent, and it shapes how I build: I think in systems, get obsessed with details, and care a lot about how things"
+            - emphasis: feel
+            - text: to use, not just how they look.
+          - paragraph: When I'm not coding, I'm usually lost in Cyberpunk 2077, building something absurd in Minecraft, or picking up random games.
+          - paragraph: I speak multiple languages. Currently learning to make things simpler.
